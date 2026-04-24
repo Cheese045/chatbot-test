@@ -9,7 +9,8 @@ if not api_key:
     st.stop()
 
 from openai import OpenAI
-client = OpenAI(api_key=api_key)
+client = OpenAI(api_key=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
+               )
 
 st.title("내 챗봇 🤖")
 
