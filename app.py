@@ -4,20 +4,20 @@ from openai import OpenAI
 
 st.set_page_config(page_title="내 챗봇", page_icon="🤖")
 
-# 1. 환경변수에서 키 가져오기 (공백만 제거, 시작 문자열 검사는 삭제)
-raw_key = os.environ.get("MY_API_KEY", "")
-api_key = raw_key.strip()
+st.title("내 챗봇 🤖")
 
-# 2. 키가 텅 비어있을 때만 에러 메시지 띄우기
-if not api_key:
+# --- 가장 중요하게 바뀐 부분! ---
+# 앱이 시작될 때 미리 가져오지 않고, OpenAI한테 값을 줄 때 바로 꺼내옵니다.
+# 이렇게 하면 Railway가 변수를 늦게 줘도 무조건 안전합니다.
+my_key = os.environ.get("MY_API_KEY", "")
+
+if not my_key:
     st.error("🚨 Railway에 API 키가 설정되지 않았습니다!")
-    st.warning("Railway 대시보드 -> Variables 탭에서 OPENAI_API_KEY 값을 입력하고 Redeploy를 눌러주세요.")
     st.stop()
 
-# 3. OpenAI 연결
-client = OpenAI(api_key=api_key)
-
-st.title("내 챗봇 🤖")
+# 위에서 통과했다면 이제 안전하게 연결
+client = OpenAI(api_key=my_key)
+# -----------------------------
 
 uploaded_file = st.file_uploader("학습할 파일 업로드", type=["txt", "pdf"])
 
