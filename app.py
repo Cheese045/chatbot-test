@@ -4,8 +4,15 @@ from openai import OpenAI
 
 st.title("내 챗봇 🤖")
 
-api_key = os.getenv("OPENAI_API_KEY")
+# 환경변수에서 키 가져오기
+api_key = os.environ.get("OPENAI_API_KEY")
 
+# 키가 제대로 안 들어왔을 때 화면이 깨지는 것 방지
+if not api_key:
+    st.error("🚨 Railway에 API 키가 설정되지 않았습니다. Variables 탭을 확인하고 Redeploy를 눌러주세요.")
+    st.stop()
+
+# 키가 정상적으로 있으면 OpenAI 실행
 client = OpenAI(api_key=api_key)
 
 uploaded_file = st.file_uploader("학습할 파일 업로드", type=["txt", "pdf"])
