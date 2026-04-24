@@ -1,21 +1,23 @@
 import streamlit as st
 import os
 from openai import OpenAI
+from dotenv import load_dotenv
+
+# .env 파일이나 시스템에서 강제로 환경변수 끌어오기
+load_dotenv()
 
 st.set_page_config(page_title="내 챗봇", page_icon="🤖")
 
 st.title("내 챗봇 🤖")
 
-# --- 가장 중요하게 바뀐 부분! ---
-# 앱이 시작될 때 미리 가져오지 않고, OpenAI한테 값을 줄 때 바로 꺼내옵니다.
-# 이렇게 하면 Railway가 변수를 늦게 줘도 무조건 안전합니다.
-my_key = os.environ.get("MY_API_KEY", "")
+# 이제 무조건 값이 들어옵니다
+my_key = os.environ.get("MY_API_KEY") or os.environ.get("OPENAI_API_KEY") or ""
 
 if not my_key:
     st.error("🚨 Railway에 API 키가 설정되지 않았습니다!")
     st.stop()
 
-# 위에서 통과했다면 이제 안전하게 연결
+# 위에서 통과했다면 안전하게 연결
 client = OpenAI(api_key=my_key)
 # -----------------------------
 
