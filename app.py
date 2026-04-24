@@ -5,7 +5,7 @@ from openai import OpenAI
 st.set_page_config(page_title="내 챗봇", page_icon="🤖")
 
 # 1. 환경변수에서 키 가져오기 (공백만 제거, 시작 문자열 검사는 삭제)
-raw_key = os.environ.get("OPENAI_API_KEY", "")
+raw_key = os.environ.get("MY_API_KEY")
 api_key = raw_key.strip()
 
 # 2. 키가 텅 비어있을 때만 에러 메시지 띄우기
