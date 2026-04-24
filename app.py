@@ -1,17 +1,11 @@
 import streamlit as st
 import os
-
-# API 키 확인
-api_key = os.getenv("OPENAI_API_KEY")
-
-if not api_key:
-    st.error("❌ OPENAI_API_KEY가 없습니다. Railway Variables를 확인하세요.")
-    st.stop()
-
 from openai import OpenAI
-client = OpenAI(api_key="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")
 
 st.title("내 챗봇 🤖")
+
+api_key = os.getenv("OPENAI_API_KEY", "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")
+client = OpenAI(api_key=api_key)
 
 uploaded_file = st.file_uploader("학습할 파일 업로드", type=["txt", "pdf"])
 
