@@ -2,18 +2,22 @@ import streamlit as st
 import os
 from openai import OpenAI
 
-st.title("내 챗봇 🤖")
+st.set_page_config(page_title="내 챗봇", page_icon="🤖")
 
-# 환경변수에서 키 가져오기
-api_key = os.environ.get("OPENAI_API_KEY")
+# 1. 환경변수에서 키 가져오기 (공백만 제거, 시작 문자열 검사는 삭제)
+raw_key = os.environ.get("OPENAI_API_KEY", "")
+api_key = raw_key.strip()
 
-# 키가 제대로 안 들어왔을 때 화면이 깨지는 것 방지
+# 2. 키가 텅 비어있을 때만 에러 메시지 띄우기
 if not api_key:
-    st.error("🚨 Railway에 API 키가 설정되지 않았습니다. Variables 탭을 확인하고 Redeploy를 눌러주세요.")
+    st.error("🚨 Railway에 API 키가 설정되지 않았습니다!")
+    st.warning("Railway 대시보드 -> Variables 탭에서 OPENAI_API_KEY 값을 입력하고 Redeploy를 눌러주세요.")
     st.stop()
 
-# 키가 정상적으로 있으면 OpenAI 실행
+# 3. OpenAI 연결
 client = OpenAI(api_key=api_key)
+
+st.title("내 챗봇 🤖")
 
 uploaded_file = st.file_uploader("학습할 파일 업로드", type=["txt", "pdf"])
 
