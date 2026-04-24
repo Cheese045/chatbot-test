@@ -2,7 +2,12 @@ import streamlit as st
 from openai import OpenAI
 import os
 
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+api_key = os.environ.get("OPENAI_API_KEY")
+if not api_key:
+    st.error("OPENAI_API_KEY 환경변수가 설정되지 않았습니다.")
+    st.stop()
+
+client = OpenAI(api_key=api_key)
 
 st.title("내 챗봇")
 
