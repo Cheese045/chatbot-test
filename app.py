@@ -4,7 +4,7 @@ from openai import OpenAI
 
 st.title("내 챗봇 🤖")
 
-api_key = os.getenv("OPENAI_API_KEY", "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")
+api_key = os.getenv("OPENAI_API_KEY", "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")
 client = OpenAI(api_key=api_key)
 
 uploaded_file = st.file_uploader("학습할 파일 업로드", type=["txt", "pdf"])
